@@ -9,22 +9,4 @@
 
 
 :javascript
-    var Todos = function () {
-      this.todos = ko.observableArray([]);
-      this.todoToAdd = ko.observable('');
-      this.addTodo = function () {
-        this.todos.push(new Todo(this.todoToAdd()));
-        this.todoToAdd('');
-      };
-      this.allowClear = ko.computed(function () {
-        if (this.todos().length) {
-          return this.todos().every(function (todo) {
-            return todo.completed();
-          });
-        }
-      }, this);
-      this.clearList = function () {
-        this.todos([]);
-      };
-    };
     ko.applyBindings(new Todos);
