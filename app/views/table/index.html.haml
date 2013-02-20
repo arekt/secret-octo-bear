@@ -1,0 +1,37 @@
+.container
+  %h1 Todo List
+  %ul.todos(data-bind="foreach: todos")
+    %li(data-bind="attr: {class: className}")
+      %input(type="checkbox" data-bind="checked: completed")
+      %span(data-bind="text: title")
+  %a(data-bind="visible: allowClear, click: clearList") Clear List
+  %input(type="text" placeholder="New Todo Title" data-bind="value: todoToAdd, event: {change: addTodo}")
+
+
+:javascript
+  var Todo = function (title) {
+      this.title = title;
+      this.completed = ko.observable(false);
+      this.className = ko.computed(function () {
+        return this.completed() ? 'completed' : null;
+      }, this);
+    };
+    var Todos = function () {
+      this.todos = ko.observableArray([]);
+      this.todoToAdd = ko.observable('');
+      this.addTodo = function () {
+        this.todos.push(new Todo(this.todoToAdd()));
+        this.todoToAdd('');
+      };
+      this.allowClear = ko.computed(function () {
+        if (this.todos().length) {
+          return this.todos().every(function (todo) {
+            return todo.completed();
+          });
+        }
+      }, this);
+      this.clearList = function () {
+        this.todos([]);
+      };
+    };
+    ko.applyBindings(new Todos);
