@@ -9,4 +9,6 @@
 
 
 :javascript
-    ko.applyBindings(new Todos);
+    var todos = [ new Todo("Buy arduino"), new Todo("Eat lunch") ]
+    dTodos = new Todos(todos)
+    ko.applyBindings(dTodos);

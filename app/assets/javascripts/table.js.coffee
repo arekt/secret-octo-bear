@@ -12,8 +12,8 @@ class Todo
     , @
 
 class Todos
-  constructor: ->
-    @todos = ko.observableArray([]);
+  constructor: (todos=[])->
+    @todos = ko.observableArray(todos);
     @todoToAdd = ko.observable('');
     @addTodo = ->
       @todos.push new Todo(@todoToAdd());
