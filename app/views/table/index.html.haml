@@ -5,10 +5,10 @@
       %input(type="checkbox" data-bind="checked: completed")
       %span(data-bind="text: title")
   %a(data-bind="visible: allowClear, click: clearList") Clear List
-  %input(type="text" placeholder="New Todo Title" data-bind="value: todoToAdd, event: {change: addTodo}")
+  %input(type="text" placeholder="New Todo Title" data-bind="value: todoToAdd, event: {change: addTodoHandler}")
 
 
 :javascript
     var todos = [ new Todo("Buy arduino"), new Todo("Eat lunch") ]
-    dTodos = new Todos(todos)
+    dTodos = Todos.create(todos)
     ko.applyBindings(dTodos);
