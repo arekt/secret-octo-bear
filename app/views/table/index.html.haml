@@ -11,15 +11,17 @@
   %div(data-bind="with: main.eip")
     %p
       First name:
-      %strong(data-bind="text: get('firstName')") todo
+      %strong.first_name(data-bind="text: firstName") todo
+      %button.btn.btn-important(data-bind="click: edit") Edit
     %p
-      Last name:
-      %strong(data-bind="text: create('lastName')") todo2
-    %p
-      %input(data-bind="value: create('lastName','aa')") todo2
+      %input(data-bind="visible: state() == 'editing', value: firstNameEdit")
+      %button.btn.btn-important(data-bind="click: save") Save
+
+
 :javascript
-    var todos = [ new Todo("Buy arduino"), new Todo("Eat lunch") ]
-    dTodos = Todos.create(todos)
-    EIP.create("firstName","James")
-    main = {todos : dTodos, eip : EIP}
+  $(document).ready(function(){
+    var todos = [ new Todo("Buy arduino"), new Todo("Eat lunch") ];
+    dTodos = Todos.create(todos);
+    main = {todos : dTodos, eip : EIP};
     ko.applyBindings(main);
+  });
