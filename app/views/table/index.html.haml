@@ -1,14 +1,24 @@
 .container
   %h1 Todo List
-  %ul.todos(data-bind="foreach: todos")
-    %li(data-bind="attr: {class: className}")
-      %input(type="checkbox" data-bind="checked: completed")
-      %span(data-bind="text: title")
-  %a(data-bind="visible: allowClear, click: clearList") Clear List
-  %input(type="text" placeholder="New Todo Title" data-bind="value: todoToAdd, event: {change: addTodoHandler}")
+  %div(data-bind="with: main.todos")
+    %ul.todos(data-bind="foreach: todos")
+      %li(data-bind="attr: {class: className}")
+        %input(type="checkbox" data-bind="checked: completed")
+        %span(data-bind="text: title")
+    %a(data-bind="visible: allowClear, click: clearList") Clear List
+    %input(type="text" placeholder="New Todo Title" data-bind="value: todoToAdd, event: {change: addTodoHandler}")
 
+  %div(data-bind="with: main.eip")
+    %p
+      First name:
+      %strong(data-bind="text: find('firstName')") todo
+    %p
+      Last name:
+      %strong(data-bind="text: find('lastName')") todo2
 
 :javascript
     var todos = [ new Todo("Buy arduino"), new Todo("Eat lunch") ]
     dTodos = Todos.create(todos)
-    ko.applyBindings(dTodos);
+    EIP.create("firstName","James")
+    main = {todos : dTodos, eip : EIP}
+    ko.applyBindings(main);
