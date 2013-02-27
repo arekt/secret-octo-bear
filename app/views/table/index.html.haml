@@ -11,11 +11,12 @@
   %div(data-bind="with: main.eip")
     %p
       First name:
-      %strong(data-bind="text: find('firstName')") todo
+      %strong(data-bind="text: get('firstName')") todo
     %p
       Last name:
-      %strong(data-bind="text: find('lastName')") todo2
-
+      %strong(data-bind="text: create('lastName')") todo2
+    %p
+      %input(data-bind="value: create('lastName','aa')") todo2
 :javascript
     var todos = [ new Todo("Buy arduino"), new Todo("Eat lunch") ]
     dTodos = Todos.create(todos)

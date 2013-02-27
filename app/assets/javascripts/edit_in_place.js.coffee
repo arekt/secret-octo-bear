@@ -5,14 +5,18 @@
 EIP =
   _values : {}
   create: (key,value)->
-    return key if @_values[key]
-    console.log "Saving value"
-    @_values[key] = ko.observable(value)
-    value
-  values: ->
-    console.log @_values
+    if @_values.hasOwnProperty(key)
+      @_values[key]
+    else
+      @_values[key] = ko.observable(value)
 
-  find: (key) ->
-    @_values[key]?() || "not set yet"
+  values: ->
+    value() for key,value of @_values
+
+  get: (key) ->
+    @_values[key]
+
+  set: (key,val) ->
+    @_values[key](val)
 
 window.EIP = EIP
