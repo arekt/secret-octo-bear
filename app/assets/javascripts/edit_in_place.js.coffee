@@ -9,6 +9,9 @@ EIP =
   save : ->
     @state("showing")
     @firstName(@firstNameEdit())
+  reset : ->
+    @state("showing")
+    @firstNameEdit(@firstName())
   edit : ->
     @state("editing")
 

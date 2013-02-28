@@ -9,14 +9,14 @@
     %input(type="text" placeholder="New Todo Title" data-bind="value: todoToAdd, event: {change: addTodoHandler}")
 
   %div(data-bind="with: main.eip")
-    %p
+    %p(data-bind="visible: state() == 'showing'")
       First name:
       %strong.first_name(data-bind="text: firstName") todo
       %button.btn.btn-important(data-bind="click: edit") Edit
-    %p
-      %input(data-bind="visible: state() == 'editing', value: firstNameEdit")
+    %p(data-bind="visible: state() == 'editing'")
+      %input(data-bind="value: firstNameEdit")
       %button.btn.btn-important(data-bind="click: save") Save
-
+      %button.btn.btn-important(data-bind="click: reset") Reset
 
 :javascript
   $(document).ready(function(){
