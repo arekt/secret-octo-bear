@@ -20,7 +20,9 @@
 
 :javascript
   $(document).ready(function(){
-    var todos = [ new Todo("Buy arduino"), new Todo("Eat lunch") ];
+    var todos = [ new Todo("check AngularJs"),
+                  new Todo("learn how to use Sublime snippets"),
+                  new Todo("setup database on Mogolab") ];
     dTodos = Todos.create(todos);
     main = {todos : dTodos, eip : EIP};
     ko.applyBindings(main);
