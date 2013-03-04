@@ -1,6 +1,6 @@
 .container
   %h1 Todo List
-  %div(data-bind="with: main.todos")
+  .todo
     %ul.todos(data-bind="foreach: todos")
       %li(data-bind="attr: {class: className}")
         %input(type="checkbox" data-bind="checked: completed")
@@ -8,7 +8,7 @@
     %a(data-bind="visible: allowClear, click: clearList") Clear List
     %input(type="text" placeholder="New Todo Title" data-bind="value: todoToAdd, event: {change: addTodoHandler}")
 
-  %div(data-bind="with: main.eip")
+  .eip
     %p(data-bind="visible: state() == 'showing'")
       First name:
       %strong.first_name(data-bind="text: firstName") todo
@@ -18,12 +18,40 @@
       %button.btn.btn-important(data-bind="click: save") Save
       %button.btn.btn-important(data-bind="click: reset") Reset
 
+  .seasons
+    %ul{"data-bind" => "template: { name: 'seasonTemplate', foreach: seasons, as: 'season' }"}
+    %script#seasonTemplate{:type => "text/html"}
+      <li>
+      <strong data-bind="text: name"></strong>
+      <ul data-bind="template: { name: 'monthTemplate', foreach: months, as: 'month' }"></ul>
+      </li>
+    %script#monthTemplate{:type => "text/html"}
+      <li>
+      <span data-bind="text: month"></span>
+      is in
+      <span data-bind="text: season.name"></span>
+      </li>
+
+
+
 :javascript
   $(document).ready(function(){
+    window.templateExample = {
+      seasons: ko.observableArray([
+          { name: 'Spring', months: [ 'March', 'April', 'May' ] },
+          { name: 'Summer', months: [ 'June', 'July', 'August' ] },
+          { name: 'Autumn', months: [ 'September', 'October', 'November' ] },
+          { name: 'Winter', months: [ 'December', 'January', 'February' ] }
+      ])
+    };
+
+
     var todos = [ new Todo("check AngularJs"),
                   new Todo("learn how to use Sublime snippets"),
                   new Todo("setup database on Mogolab") ];
     dTodos = Todos.create(todos);
-    main = {todos : dTodos, eip : EIP};
-    ko.applyBindings(main);
+    main = {todos : dTodos, eip : EIP, bip : BIP, templateExample: templateExample};
+    ko.applyBindings(dTodos, $(".todo")[0]);
+    ko.applyBindings(EIP, $(".eip")[0]);
+    ko.applyBindings(templateExample, $(".seasons")[0]);
   });

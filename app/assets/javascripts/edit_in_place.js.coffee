@@ -16,3 +16,13 @@ EIP =
     @state("editing")
 
 window.EIP = EIP
+
+window.BIP =
+  bips : ko.observableArray(["aa","bb"])
+
+ko.bindingHandlers.bip =
+  init: (element, valueAccessor, allBindingsAccessor) ->
+    ko.bindingHandlers['value']["init"](element, valueAccessor, allBindingsAccessor)
+  update: (element, valueAccessor, allBindingsAccessor) ->
+    console.log "update fired:"+ valueAccessor()
+    element.value = valueAccessor()[0]
