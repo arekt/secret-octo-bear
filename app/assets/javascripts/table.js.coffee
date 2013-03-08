@@ -4,19 +4,23 @@
 class Todo
   constructor: (@title) ->
     @completed = ko.observable(false)
-    @className = ko.computed ->
+    @className = ko.computed =>
       if @completed()
         'completed'
       else
         null
-    , @
 
-Todos = {
-  create: (todos=[])->
-    @todos = ko.observableArray(todos);
+class Todos
+  constructor: (todos_array=[])->
+    @todos = ko.observableArray(todos_array);
     @todoToAdd = ko.observable('');
     @todoToAdd('');
-    @
+    @allowClear = ko.computed =>
+      if @todos().length > 5
+        return true
+      else
+        false
+
 
   addTodoHandler : ->
     @todos.push new Todo(@todoToAdd());
@@ -24,14 +28,9 @@ Todos = {
   addTodo : (todo)->
     @todos.push new Todo(todo);
 
-  allowClear: =>
-    ko.computed ->
-      if @todos().length
-        return @todos().every (todo) ->
-          return todo.completed();
+
   clearList: ->
     @todos([]);
-}
 
 window.Todo = Todo
 window.Todos = Todos

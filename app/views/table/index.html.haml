@@ -49,7 +49,7 @@
     var todos = [ new Todo("check AngularJs"),
                   new Todo("learn how to use Sublime snippets"),
                   new Todo("setup database on Mogolab") ];
-    dTodos = Todos.create(todos);
+    dTodos = new Todos(todos);
     main = {todos : dTodos, eip : EIP, bip : BIP, templateExample: templateExample};
     ko.applyBindings(dTodos, $(".todo")[0]);
     ko.applyBindings(EIP, $(".eip")[0]);
