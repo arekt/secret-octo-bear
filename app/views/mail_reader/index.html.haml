@@ -1,0 +1,32 @@
+#mail_reader.container
+  %ul.nav.nav-pills.folders{"data-bind" => "foreach: folders"}
+    %li(data-bind='css: {active: $data == $root.chosenFolderId()}')
+      %a{"data-bind" => "text: $data, css: { selected: $data == $root.chosenFolderId(), }, click: $root.goToFolder"}
+  .row
+    %table.span12.table.table-striped.table-bordered.mails{"data-bind" => "with: chosenFolderData"}
+      %thead
+        %tr
+          %th From
+          %th To
+          %th Subject
+          %th Date
+      %tbody{"data-bind" => "foreach: mails"}
+        %tr{"data-bind" => "click: $root.goToMail"}
+          %td{"data-bind" => "text: from"}
+          %td{"data-bind" => "text: to"}
+          %td{"data-bind" => "text: subject"}
+          %td{"data-bind" => "text: date"}
+  .row
+    .span12.viewMail{"data-bind" => "with: chosenMailData"}
+      .mailInfo
+        %h2{"data-bind" => "text: subject"}
+        %h3
+          %label> From:
+          %span{"data-bind" => "text: from"}
+        %h3
+          %label> To:
+          %span{"data-bind" => "text: to"}
+        %h3
+          %label> Date:
+          %span{"data-bind" => "text: date"}
+      %p.message{"data-bind" => "html: messageContent"}
