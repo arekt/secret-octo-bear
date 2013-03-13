@@ -1,16 +1,22 @@
+%h3 How cool is this?
 .container
   .span6
     %form.form-horizontal.cool_form
-      =bootstrap_input(:first_name, :label => "First name") do
-        value: firstName,
-        visible: true
-      =bootstrap_input(:last_name, :label => "Last name") do
-        value: lastName,
-        visible: true
+      =ko_input :first_name
+      =ko_input :age
+      =ko_input :last_name do
+        - bindings_for :label => "visible: false, text: label"
 
 :coffee
 $ ->
   formData =
-    firstName: "Arek"
-    lastName: "Turlewicz"
+    first_name:
+      value: "Arek"
+      label: "First Name"
+    last_name:
+      value: "Turlewicz"
+      label: "Last Name"
+    age:
+      value: "34"
+      label: "Age"
   ko.applyBindings(formData, $(".cool_form")[0]);

@@ -1,4 +1,6 @@
-.control-group
-  %label.control-label{:for => "#{field_name}"}= options[:label] || field_name
+- label_bindings = knockout_options[:label] || "text: label"
+- input_bindings = knockout_options[:input] || "value: value"
+.control-group{"data-bind" => "with: #{field_name}"}
+  %label.control-label{"data-bind" => label_bindings }
   .controls
-    %input{type: "text", id: "#{field_name}", "data-bind" => "#{(capture &block)}" }
+    %input{type: "text", id: "#{field_name}", "data-bind" => input_bindings }
