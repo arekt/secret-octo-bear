@@ -1,4 +1,4 @@
 .control-group
-  %label.control-label{:for => "#{field_name}"}= field_name
+  %label.control-label{:for => "#{field_name}"}= options[:label] || field_name
   .controls
-    %input{:id => "#{field_name}", "data-bind" => "#{(capture &block).split("\n").join(", ")}" }
+    %input{type: "text", id: "#{field_name}", "data-bind" => "#{(capture &block)}" }

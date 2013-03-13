@@ -1,5 +1,16 @@
-%form.form
-  =bootstrap_input(:name) do
-    value: name
-    visible: true
+.container
+  .span6
+    %form.form-horizontal.cool_form
+      =bootstrap_input(:first_name, :label => "First name") do
+        value: firstName,
+        visible: true
+      =bootstrap_input(:last_name, :label => "Last name") do
+        value: lastName,
+        visible: true
 
+:coffee
+$ ->
+  formData =
+    firstName: "Arek"
+    lastName: "Turlewicz"
+  ko.applyBindings(formData, $(".cool_form")[0]);
