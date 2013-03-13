@@ -3,6 +3,7 @@ KickoutTest::Application.routes.draw do
   resources :table
   resources :mail_reader
   resources :mails
+  resources :forms
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
