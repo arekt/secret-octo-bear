@@ -11,22 +11,25 @@
 
 :coffee
 $ ->
-  window.formData =
+  initialData =
     person:
       first_name:
         value: "Arek"
         label: "First Name"
-        errors: ko.observableArray([])
+        errors: []
       last_name:
         value: "Turlewicz"
         label_asdf: "Last Name"
-        errors: ko.observableArray([])
+        errors: []
       age:
         value: "34"
         label: "Age"
-        errors: ko.observableArray(["asdfasdf"])
+        errors: ["asdfasdf"]
       details:
         ocupation:
-          value: "asdfasdf"
+          value: "ruby/js developer"
           label: "Ocupation"
+          errors: []
+
+  window.formData = ko.mapping.fromJS(initialData);
   ko.applyBindings(formData, $(".cool_form")[0]);

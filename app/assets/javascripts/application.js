@@ -12,4 +12,5 @@
 //
 //= require "jquery"
 //= require knockout-2.2.1.debug
+//= require knockout.mapping-latest.debug
 //= require_tree .
