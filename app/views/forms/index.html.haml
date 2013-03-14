@@ -8,11 +8,14 @@
         =f.input :last_name, :label => "visible: true, text: label_asdf"
         =f.fields_for :details do
           =f.input :ocupation
+        =f.submit :send
 
 :coffee
 $ ->
   initialData =
     person:
+      submit : (event)->
+        console.log JSON.stringify(ko.mapping.toJS(formData.person))
       first_name:
         value: "Arek"
         label: "First Name"

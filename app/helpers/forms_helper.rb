@@ -11,7 +11,10 @@ module FormsHelper
       end
     end
     def input(field_name, options={})
-      @view_context.render "shared/bootstrap_input", field_name: field_name, options: options
+      @view_context.render "shared/bootstrap/input", field_name: field_name, options: options
+    end
+    def submit(field_name, options={})
+      @view_context.render "shared/bootstrap/submit", field_name: field_name, options: options
     end
     def fields_for(model, &block)
       @view_context.content_tag :div, "data-bind" => "with: #{model}", &block
