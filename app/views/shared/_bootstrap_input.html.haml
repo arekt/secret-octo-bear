@@ -1,6 +1,6 @@
-- label_bindings = knockout_options[:label] || "text: label"
-- input_bindings = knockout_options[:input] || "value: value"
-- error_bindings = knockout_options[:error] || "foreach: errors"
+- label_bindings = options[:label] || "text: label"
+- input_bindings = options[:input] || "value: value"
+- error_bindings = options[:error] || "foreach: errors"
 .control-group{"data-bind" => "with: #{field_name}"}
   %label.control-label{"data-bind" => label_bindings }
   .controls

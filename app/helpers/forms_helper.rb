@@ -1,24 +1,22 @@
 module FormsHelper
-  def ko_input(field_name, options={}, &block)
-    knockout_options = block_given? ? KnockoutDSL.build(&block).custom_bindings : {}
-    Rails.logger.debug "********************************
-    #{knockout_options}"
-    render "shared/bootstrap_input", field_name: field_name, options: options, knockout_options: knockout_options
-    end
-  class KnockoutDSL
+  class KnockoutForm
     attr_accessor :custom_bindings
-    def initialize
-      @custom_bindings = {}
+    def initialize(view_context)
+      @view_context = view_context
     end
-    def self.build(&block)
-      a = KnockoutDSL.new
+    def self.form(view_context, &block)
+      a = KnockoutForm.new(view_context)
       a.instance_eval &block
       a
     end
-    def bindings_for(options={})
-      options.each do |k,v|
-        @custom_bindings[k] = v
-      end
+    def input(field_name, options={})
+      @view_context.render "shared/bootstrap_input", field_name: field_name, options: options
     end
+    def fields_for(model, &block)
+      @view_context.content_tag :div, "data-bind" => "with: #{model}", &block
+    end
+  end
+  def ko_form(*args, &block)
+    KnockoutForm.form(self, &block)
   end
 end

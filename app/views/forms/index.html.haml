@@ -2,24 +2,26 @@
 .container
   .span6
     %form.form-horizontal.cool_form
-      =ko_input :first_name
-      =ko_input :age
-      =ko_input :last_name do
-        - bindings_for :label => "visible: true, text: label_asdf"
+      - ko_form do
+        = fields_for :person do
+          =input :first_name
+          =input :age
+          =input :last_name, :label => "visible: true, text: label_asdf"
 
 :coffee
 $ ->
   window.formData =
-    first_name:
-      value: "Arek"
-      label: "First Name"
-      errors: ko.observableArray([])
-    last_name:
-      value: "Turlewicz"
-      label_asdf: "Last Name"
-      errors: ko.observableArray([])
-    age:
-      value: "34"
-      label: "Age"
-      errors: ko.observableArray(["asdfasdf"])
+    person:
+      first_name:
+        value: "Arek"
+        label: "First Name"
+        errors: ko.observableArray([])
+      last_name:
+        value: "Turlewicz"
+        label_asdf: "Last Name"
+        errors: ko.observableArray([])
+      age:
+        value: "34"
+        label: "Age"
+        errors: ko.observableArray(["asdfasdf"])
   ko.applyBindings(formData, $(".cool_form")[0]);
