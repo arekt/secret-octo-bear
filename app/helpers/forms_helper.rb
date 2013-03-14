@@ -4,10 +4,11 @@ module FormsHelper
     def initialize(view_context)
       @view_context = view_context
     end
-    def self.form(view_context, &block)
+    def self.form_for(view_context, model, &block)
       a = KnockoutForm.new(view_context)
-      a.instance_eval &block
-      a
+      a.fields_for(model) do
+        block.call a
+      end
     end
     def input(field_name, options={})
       @view_context.render "shared/bootstrap_input", field_name: field_name, options: options
@@ -16,7 +17,7 @@ module FormsHelper
       @view_context.content_tag :div, "data-bind" => "with: #{model}", &block
     end
   end
-  def ko_form(*args, &block)
-    KnockoutForm.form(self, &block)
+  def ko_form_for(model, &block)
+    KnockoutForm.form_for(self, model, &block)
   end
 end

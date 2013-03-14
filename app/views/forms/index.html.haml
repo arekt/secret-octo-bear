@@ -1,12 +1,13 @@
 %h3 How cool is this?
 .container
   .span6
-    %form.form-horizontal.cool_form
-      - ko_form do
-        = fields_for :person do
-          =input :first_name
-          =input :age
-          =input :last_name, :label => "visible: true, text: label_asdf"
+    .form-horizontal.cool_form
+      = ko_form_for :person do |f|
+        =f.input :first_name
+        =f.input :age
+        =f.input :last_name, :label => "visible: true, text: label_asdf"
+        =f.fields_for :details do
+          =f.input :ocupation
 
 :coffee
 $ ->
@@ -24,4 +25,8 @@ $ ->
         value: "34"
         label: "Age"
         errors: ko.observableArray(["asdfasdf"])
+      details:
+        ocupation:
+          value: "asdfasdf"
+          label: "Ocupation"
   ko.applyBindings(formData, $(".cool_form")[0]);
