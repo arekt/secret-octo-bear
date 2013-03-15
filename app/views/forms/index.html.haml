@@ -13,9 +13,17 @@
 :coffee
 $ ->
   initialData =
+    submit : (event)->
+        $.ajax
+          type: "POST"
+          url: "/forms"
+          data: {person: ko.mapping.toJS(formData.person)}
+          success: (data) =>
+            console.log data
+            formData.person[k].errors(v) for k,v of data.errors
+          error: ->
+            console.log "error"
     person:
-      submit : (event)->
-        console.log JSON.stringify(ko.mapping.toJS(formData.person))
       first_name:
         value: "Arek"
         label: "First Name"
