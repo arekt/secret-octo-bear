@@ -5,42 +5,50 @@
       = ko_form_for :person do |f|
         =f.input :first_name
         =f.input :age
-        =f.input :last_name, :label => "visible: true, text: label_asdf"
-        =f.fields_for :details do
-          =f.input :ocupation
+        =f.input :last_name
         =f.submit :send
 
 :coffee
 $ ->
-  initialData =
+  window.FormBuilder =
     submit : (event)->
-        $.ajax
-          type: "POST"
-          url: "/forms"
-          data: {person: ko.mapping.toJS(formData.person)}
-          success: (data) =>
-            console.log data
-            formData.person[k].errors(v) for k,v of data.errors
-          error: ->
-            console.log "error"
-    person:
-      first_name:
-        value: "Arek"
-        label: "First Name"
-        errors: []
-      last_name:
-        value: "Turlewicz"
-        label_asdf: "Last Name"
-        errors: []
-      age:
-        value: "34"
-        label: "Age"
-        errors: ["asdfasdf"]
-      details:
-        ocupation:
-          value: "ruby/js developer"
-          label: "Ocupation"
-          errors: []
+      $.ajax
+        type: "POST"
+        url: "/forms"
+        data: {person: ko.mapping.toJS(FormBuilder.personForm)}
+        success: (data) =>
+          console.log data
+          #formData.person[k].errors(v) for k,v of data.errors
+        error: ->
+          console.log "error"
 
-  window.formData = ko.mapping.fromJS(initialData);
-  ko.applyBindings(formData, $(".cool_form")[0]);
+    textField : (root, model_name) ->
+      data = root.data[model_name]
+      node = {v: data, label: model_name, errors: [], name: model_name, path: root.getPath(model_name), getPath: root.getPath }
+      root[model_name] = node
+      return node
+
+    section : (root, model_name, data) ->
+      console.log "section data: "
+      console.log data
+      model_name = "person" # TODO
+      node = {name: model_name, path: root.getPath(model_name), getPath: root.getPath, data: data }
+      root[model_name] = node
+      console.log node
+      return node
+
+    formRoot: { path : "", getPath : (part) ->
+        if @path == ""
+          part
+        else
+          [@path,part].join(".")}
+
+    person:
+      first_name: "Arek"
+      last_name: "Turlewicz"
+      age: "34"
+      details:
+        ocupation: "ruby/js developer"
+
+/ jQuery.extend(settings, options);
+  ko.applyBindings(FormBuilder, $(".cool_form")[0]);

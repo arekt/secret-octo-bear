@@ -16,8 +16,8 @@ module FormsHelper
     def submit(field_name, options={})
       @view_context.render "shared/bootstrap/submit", field_name: field_name, options: options
     end
-    def fields_for(model, &block)
-      @view_context.content_tag :div, "data-bind" => "with: #{model}", &block
+    def fields_for(model=nil, &block)
+      @view_context.content_tag :div, "data-bind" => "with: $data.section(formRoot,'#{model}',#{model})".html_safe, &block
     end
   end
   def ko_form_for(model, &block)
