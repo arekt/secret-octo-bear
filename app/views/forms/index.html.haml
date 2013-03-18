@@ -1,5 +1,5 @@
 %h3 Example how to use koForm
-#person{:"data-hash"=>@person.to_json}
+#person{:"data-hash"=>@person.to_json, :"data-authenticity-token"=>form_authenticity_token}
 .container
   .span6
     .form-horizontal.cool_form
@@ -21,7 +21,7 @@ $ ->
       $.ajax
         type: "POST"
         url: "/forms"
-        data: {person: ko.mapping.toJS(object.data)}
+        data: {person: ko.mapping.toJS(object.data), authenticity_token: $("#person").data("authenticity-token")}
         success: (data) =>
           console.log "Received: "
           console.log data
