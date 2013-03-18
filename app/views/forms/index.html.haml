@@ -6,6 +6,9 @@
         =f.input :first_name
         =f.input :age
         =f.input :last_name
+        =f.fields_for :details do
+          =f.input :ocupation
+          =f.input :hobby
         =f.submit :send
 
 :coffee
@@ -29,12 +32,9 @@ $ ->
       return node
 
     section : (root, model_name, data) ->
-      console.log "section data: "
-      console.log data
-      model_name = "person" # TODO
+      data = data || root.data[model_name]
       node = {name: model_name, path: root.getPath(model_name), getPath: root.getPath, data: data }
       root[model_name] = node
-      console.log node
       return node
 
     formRoot: { path : "", getPath : (part) ->
@@ -44,11 +44,12 @@ $ ->
           [@path,part].join(".")}
 
     person:
-      first_name: "Arek"
-      last_name: "Turlewicz"
-      age: "34"
+      first_name: ko.observable("Arek")
+      last_name: ko.observable("Turlewicz")
+      age: ko.observable(34)
       details:
-        ocupation: "ruby/js developer"
+        ocupation: ko.observable("ruby/js developer")
+        hobby: ko.observable("asdfasdfas")
 
 / jQuery.extend(settings, options);
   ko.applyBindings(FormBuilder, $(".cool_form")[0]);
