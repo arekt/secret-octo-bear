@@ -1,33 +1,37 @@
-%h3 How cool is this?
+%h3 Example how to use koForm
+#person{:"data-hash"=>@person.to_json}
 .container
   .span6
     .form-horizontal.cool_form
       = ko_form_for :person do |f|
-        =f.input :first_name
-        =f.input :age
-        =f.input :last_name
+        =f.text_field :first_name
+        =f.text_field :age
+        =f.text_field :last_name
         =f.fields_for :details do
-          =f.input :ocupation
-          =f.input :hobby
+          =f.text_field :work
+          =f.text_field :hobby
         =f.submit :send
 
 :coffee
 $ ->
   window.FormBuilder =
-    submit : (event)->
+    submit : (object)->
+      console.log "Sending data: "
+      console.log object
       $.ajax
         type: "POST"
         url: "/forms"
-        data: {person: ko.mapping.toJS(FormBuilder.personForm)}
+        data: {person: ko.mapping.toJS(object.data)}
         success: (data) =>
+          console.log "Received: "
           console.log data
-          #formData.person[k].errors(v) for k,v of data.errors
+          #person[k].errors(v) for k,v of data.errors # TODO
         error: ->
           console.log "error"
 
     textField : (root, model_name) ->
       data = root.data[model_name]
-      node = {v: data, label: model_name, errors: [], name: model_name, path: root.getPath(model_name), getPath: root.getPath }
+      node = {v: data, label: model_name, errors: ko.observableArray([]), name: model_name, path: root.getPath(model_name), getPath: root.getPath }
       root[model_name] = node
       return node
 
@@ -43,13 +47,7 @@ $ ->
         else
           [@path,part].join(".")}
 
-    person:
-      first_name: ko.observable("Arek")
-      last_name: ko.observable("Turlewicz")
-      age: ko.observable(34)
-      details:
-        ocupation: ko.observable("ruby/js developer")
-        hobby: ko.observable("asdfasdfas")
+    person: ko.mapping.fromJS($("#person").data("hash"))
 
 / jQuery.extend(settings, options);
   ko.applyBindings(FormBuilder, $(".cool_form")[0]);

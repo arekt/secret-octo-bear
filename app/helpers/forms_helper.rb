@@ -10,7 +10,7 @@ module FormsHelper
         block.call a
       end
     end
-    def input(field_name, options={})
+    def text_field(field_name, options={})
       @view_context.render "shared/bootstrap/input", field_name: field_name, options: options
     end
     def submit(field_name, options={})
