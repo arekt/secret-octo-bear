@@ -1,16 +1,18 @@
 %h3 Example how to use koForm
 #person{:"data-hash"=>@person.to_json, :"data-authenticity-token"=>form_authenticity_token}
 .container
-  .span6
-    .form-horizontal.cool_form
-      = ko_form_for :person do |f|
-        =f.text_field :first_name
-        =f.text_field :age
-        =f.text_field :last_name
-        =f.fields_for :details do
-          =f.text_field :work
-          =f.text_field :hobby
-        =f.submit :send
+  .span6.form_container
+    = ko_form_for :person do |f|
+      =f.text_field :first_name
+      =f.text_field :age
+      =f.text_field :last_name
+      %hr
+      =f.fields_for :details do
+        =f.text_field :work
+        =f.text_field :hobby
+        =f.text_field :some_field
+      =f.submit :send
+
 
 :coffee
 $ ->
@@ -41,13 +43,15 @@ $ ->
       root[model_name] = node
       return node
 
-    formRoot: { path : "", getPath : (part) ->
+    formRoot: {path : "", getPath : (part) ->
         if @path == ""
           part
         else
           [@path,part].join(".")}
 
+    messages: [ {title: "hello", body: "asdfasdf"}]
+
     person: ko.mapping.fromJS($("#person").data("hash"))
 
 / jQuery.extend(settings, options);
-  ko.applyBindings(FormBuilder, $(".cool_form")[0]);
+  ko.applyBindings(FormBuilder, $(".form_container")[0]);

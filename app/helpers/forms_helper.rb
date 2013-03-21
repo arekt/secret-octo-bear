@@ -20,7 +20,12 @@ module FormsHelper
       @view_context.content_tag :div, "data-bind" => "with: $root.section($data,'#{model}')".html_safe, &block
     end
     def form_for(model=nil, &block)
-      @view_context.content_tag :div, "data-bind" => "with: $data.section(formRoot,'#{model}',#{model})".html_safe, &block
+
+      @view_context.content_tag :form, class: "form-horizontal" do
+        (@view_context.render("shared/bootstrap/messages") +
+        @view_context.content_tag( :div, "data-bind" => "with: $data.section(formRoot,'#{model}',#{model})".html_safe, &block)
+        ).html_safe
+      end
     end
   end
   def ko_form_for(model, &block)
