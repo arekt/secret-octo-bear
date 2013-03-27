@@ -1,14 +1,16 @@
+# encoding: utf-8
 class FormsController < ApplicationController
   def index
-    @person = {:first_name => "John", :last_name => "Smith", :age => 45, :details => { hobby: "Movies", work: "PR", some_field: "asdfas"}, :errors => [:first_name => "aaaaa"]}
+    @person = {:"名" => "John", :last_name => "Smith", :age => 45, :details => { hobby: "Movies", work: "PR", some_field: "asdfas", :errors => []}, :errors => []}
   end
   def create
     Rails.logger.debug "received: #{params.to_yaml}"
     @person = params[:person]
-    @person[:last_name] += "a"
     @person[:errors] = []
-    @person[:errors] << {:last_name => "is to short"}
-    @person[:details][:errors] = [{:hobby => "this is work, not hobby"}]
+    @person[:errors] << {:名 => "aasdfasdf"} if @person[:名] == "Arkadiusz"
+    @person[:errors] << {:last_name => "asdfasdf"}
+    @person[:details][:errors] = [{:hobby => "asdfasdfasdfsadfsadfasdf"}]
+    Rails.logger.debug @person.to_json
     render :json => @person.to_json
   end
 end

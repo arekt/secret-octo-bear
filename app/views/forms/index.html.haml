@@ -3,7 +3,7 @@
 .container
   .span6.form_container
     = ko_form_for :person do |f|
-      =f.text_field :first_name
+      =f.text_field :名
       =f.text_field :age
       =f.text_field :last_name
       %hr
@@ -34,20 +34,22 @@ $ ->
       console.log @person.errors
 
     textField : (root, model_name) ->
+      console.log "root:"
+      console.log root
       data = root.data[model_name]
-      errors = []
+      errors = ko.observableArray([])
       if root.data.errors
         for error in root.data.errors()
-          console.log error
           for k,v of error
-            console.log k
-            errors.push v if k == model_name
+            errors().push v if k == model_name
       node = {v: data, errors: errors, label: model_name, name: model_name, path: root.getPath(model_name), getPath: root.getPath }
       root[model_name] = node
       return node
 
     section : (root, model_name, data) ->
       data = data || root.data[model_name]
+      console.log "section data:"
+      console.log data
       node = {name: model_name, path: root.getPath(model_name), getPath: root.getPath, data: data }
       root[model_name] = node
       return node
