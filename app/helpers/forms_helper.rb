@@ -7,7 +7,7 @@ module FormsHelper
     def self.form_for(view_context, model, &block)
       a = KnockoutForm.new(view_context)
       a.form_for(model) do
-        block.call a
+        yield(a)
       end
     end
     def text_field(field_name, options={})
@@ -20,12 +20,10 @@ module FormsHelper
       @view_context.content_tag :div, "data-bind" => "with: $root.section($data,'#{model}')".html_safe, &block
     end
     def form_for(model=nil, &block)
-
-      @view_context.content_tag :form, class: "form-horizontal" do
-        (@view_context.render("shared/bootstrap/messages") +
-        @view_context.content_tag( :div, "data-bind" => "with: $data.section(formRoot,'#{model}',#{model})".html_safe, &block)
-        ).html_safe
+      @view_context.content_for :inner_html do
+        block.call(self)
       end
+      @view_context.render "shared/bootstrap/form", model: model
     end
   end
   def ko_form_for(model, &block)

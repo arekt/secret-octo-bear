@@ -1,0 +1,4 @@
+= render("shared/bootstrap/messages")
+%form.form-horizontal
+  %div{"data-bind" => "with: $data.section(formRoot,'#{model}',#{model})"}
+    = yield :inner_html
