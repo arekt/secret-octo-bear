@@ -20,6 +20,7 @@ module FormsHelper
       @view_context.content_tag :div, "data-bind" => "with: $root.section($data,'#{model}')".html_safe, &block
     end
     def form_for(model=nil, &block)
+      @view_context.content_for :inner_html, @view_context.content_tag(:p, "Here form starts:")
       @view_context.content_for :inner_html do
         block.call(self)
       end
