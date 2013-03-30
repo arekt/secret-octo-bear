@@ -1,8 +1,8 @@
 %h3 Example how to use koForm
-#person{:"data-hash"=>@person.to_json, :"data-authenticity-token"=>form_authenticity_token}
+
 .container
   .span6.form_container
-    = ko_form_for :person do |f|
+    = ko_form_for @person, {:as => :person, :url => "/forms"} do |f|
       =f.text_field :名
       =f.text_field :age
       =f.text_field :last_name
@@ -21,7 +21,7 @@ $ ->
       $.ajax
         type: "POST"
         url: "/forms"
-        data: {person: ko.mapping.toJS(object.data), authenticity_token: $("#person").data("authenticity-token")}
+        data: {model: ko.mapping.toJS(object.data), authenticity_token: $("#model").data("authenticity-token")}
         success: (data) =>
           FormBuilder.updateModel(data)
           return false
@@ -29,13 +29,9 @@ $ ->
           console.log "error"
 
     updateModel : (data)->
-      console.log data
-      ko.mapping.fromJS(data, @person);
-      console.log @person.errors
+      ko.mapping.fromJS(data, @model);
 
     textField : (root, model_name) ->
-      console.log "root:"
-      console.log root
       data = root.data[model_name]
       errors = ko.observableArray([])
       if root.data.errors
@@ -46,10 +42,7 @@ $ ->
       root[model_name] = node
       return node
 
-    section : (root, model_name, data) ->
-      data = data || root.data[model_name]
-      console.log "section data:"
-      console.log data
+    section : (root, model_name, data=FormBuilder.model) ->
       node = {name: model_name, path: root.getPath(model_name), getPath: root.getPath, data: data }
       root[model_name] = node
       return node
@@ -62,7 +55,7 @@ $ ->
 
     messages: [ {title: "hello", body: "asdfasdf"}]
 
-    person: ko.mapping.fromJS($("#person").data("hash"))
+    model: ko.mapping.fromJS($("#model").data("hash"))
 
 / jQuery.extend(settings, options);
   ko.applyBindings(FormBuilder, $(".form_container")[0]);
