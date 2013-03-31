@@ -1,4 +1,4 @@
 %form.form-horizontal{:"data-authenticity-token"=>form_authenticity_token, :"data-model"=>model.to_json}
   = render("shared/bootstrap/messages")
-  %div{"data-bind" => "with: form()"}
+  %div{"data-bind" => "with: form(#{options.to_json})"}
     = content

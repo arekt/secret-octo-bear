@@ -14,7 +14,7 @@ $ ->
         console.log object
         $.ajax
           type: "POST"
-          url: "/forms"
+          url: @options.url
           data: {person: ko.mapping.toJS(object.data), authenticity_token: @token}
           success: (data) =>
             console.log data
@@ -40,7 +40,8 @@ $ ->
         root[model_name] = node
         return node
 
-      @form =  =>
+      @form =  (@options)=>
+        console.log options
         {data:  @model }
       @messages = [ {title: "hello", body: "asdfasdf"}]
 

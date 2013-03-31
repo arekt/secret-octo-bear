@@ -3,7 +3,7 @@ module FormsHelper
     attr_accessor :custom_bindings
     def initialize(view_context, options={})
       @view_context = view_context
-      @form = options
+      @options = options
     end
     def self.form_for(view_context, model, options={}, &block)
       a = KnockoutForm.new(view_context, options)
@@ -24,7 +24,7 @@ module FormsHelper
       content = @view_context.capture do
         block.call(self)
       end
-      @view_context.render "shared/bootstrap/form", model: model, content: content
+      @view_context.render "shared/bootstrap/form", model: model, content: content, options: @options
     end
   end
   def ko_form_for(model, options={}, &block)
