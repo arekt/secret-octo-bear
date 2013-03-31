@@ -7,17 +7,12 @@ $ ->
       @token = $(form_tag).data("authenticity-token")
       @model = ko.mapping.fromJS($(form_tag).data("model"))
       @raw_data = $(form_tag).data("model")
-      console.log $(form_tag).data("model")
-      console.log @model
       @submit = (object)=>
-        console.log "Sending:"
-        console.log object
         $.ajax
           type: "POST"
           url: @options.url
           data: {person: ko.mapping.toJS(object.data), authenticity_token: @token}
           success: (data) =>
-            console.log data
             ko.mapping.fromJS(data, @model);
             return false
           error: ->
@@ -35,17 +30,13 @@ $ ->
         return node
 
       @section = (root, model_name, data) ->
-        console.log "Section was called"
         node = {name: model_name, data : data }
         root[model_name] = node
         return node
 
-      @form =  (@options)=>
-        console.log options
-        {data:  @model }
-      @messages = [ {title: "hello", body: "asdfasdf"}]
+      @form = (@options)=>
+        {data: @model }
 
   $(".form_container form").each (index,form)->
-    console.log form
     window.fb = new FormBuilder(form)
     ko.applyBindings(fb, form);

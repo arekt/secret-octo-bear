@@ -12,15 +12,17 @@ module FormsHelper
       end
     end
     def text_field(field_name, options={})
-      @view_context.render "shared/bootstrap/input", field_name: field_name, options: options
+      @view_context.render "shared/bootstrap/input", field_name: field_name, options: options, scope: @scope
     end
     def submit(field_name, options={})
       @view_context.render "shared/bootstrap/submit", field_name: field_name, options: options
     end
     def fields_for(model=nil, &block)
+      @scope = model
       @view_context.content_tag :div, "data-bind" => "with: $root.section($data,'#{model}',$data.data.#{model})".html_safe, &block
     end
     def form_for(model=nil, &block)
+      @scope = @options[:as]
       content = @view_context.capture do
         block.call(self)
       end
