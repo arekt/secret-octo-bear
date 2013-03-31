@@ -2,4 +2,10 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  person:
+    first_name: First Name
+    age: Age
+    last_name: Last Name
+  details:
+    work: Work
+    hobby: Hobby

@@ -1,9 +1,8 @@
-- label_bindings = options[:label] || "text: label"
-- input_bindings = options[:input] || "value: value"
-- error_bindings = options[:error] || "foreach: errors"
-.control-group{"data-bind" => "with: #{field_name}"}
-  %label.control-label{"data-bind" => label_bindings }
+- input_bindings = options[:input] || "value: v"
+- error_bindings = options[:error] || "foreach: $data.errors"
+.control-group{"data-bind" => "with: $root.textField($data,'#{field_name}')"}
+  %label.control-label= I18n.t(field_name, :scope => scope)
   .controls
     %input{type: "text", id: "#{field_name}", "data-bind" => input_bindings }
-      .errors{"data-bind" => error_bindings}
-        %p.text-error(data-bind="text: $data")
+    .errors{"data-bind" => error_bindings}
+      %p.text-error(data-bind="text: $data")

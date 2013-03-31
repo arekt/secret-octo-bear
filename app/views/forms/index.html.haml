@@ -1,46 +1,26 @@
-%h3 How cool is this?
+%h3 Example how to use koForm
+
 .container
-  .span6
-    .form-horizontal.cool_form
-      = ko_form_for :person do |f|
-        =f.input :first_name
-        =f.input :age
-        =f.input :last_name, :label => "visible: true, text: label_asdf"
+  .row
+    .span6.form_container
+      = ko_form_for @person, {:as => :person, :url => "/forms"} do |f|
+        =f.text_field :first_name
+        =f.text_field :age
+        =f.text_field :last_name
+        %hr
         =f.fields_for :details do
-          =f.input :ocupation
+          =f.text_field :work
+          =f.text_field :hobby
         =f.submit :send
 
-:coffee
-$ ->
-  initialData =
-    submit : (event)->
-        $.ajax
-          type: "POST"
-          url: "/forms"
-          data: {person: ko.mapping.toJS(formData.person)}
-          success: (data) =>
-            console.log data
-            formData.person[k].errors(v) for k,v of data.errors
-          error: ->
-            console.log "error"
-    person:
-      first_name:
-        value: "Arek"
-        label: "First Name"
-        errors: []
-      last_name:
-        value: "Turlewicz"
-        label_asdf: "Last Name"
-        errors: []
-      age:
-        value: "34"
-        label: "Age"
-        errors: ["asdfasdf"]
-      details:
-        ocupation:
-          value: "ruby/js developer"
-          label: "Ocupation"
-          errors: []
 
-  window.formData = ko.mapping.fromJS(initialData);
-  ko.applyBindings(formData, $(".cool_form")[0]);
+    .span6.form_container
+      = ko_form_for @person, {:as => :person, :url => "/forms"} do |f|
+        =f.text_field :first_name
+        =f.text_field :last_name
+        =f.text_field :age
+        %hr
+        =f.fields_for :details do
+          =f.text_field :work
+          =f.text_field :hobby
+        =f.submit :send
