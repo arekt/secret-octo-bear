@@ -21,11 +21,10 @@ module FormsHelper
       @view_context.content_tag :div, "data-bind" => "with: $root.section($data,'#{model}',$data.data.#{model})".html_safe, &block
     end
     def form_for(model=nil, &block)
-      @view_context.content_for :inner_html, @view_context.content_tag(:p, "Here form starts:")
-      @view_context.content_for :inner_html do
+      content = @view_context.capture do
         block.call(self)
       end
-      @view_context.render "shared/bootstrap/form", model: model
+      @view_context.render "shared/bootstrap/form", model: model, content: content
     end
   end
   def ko_form_for(model, options={}, &block)
