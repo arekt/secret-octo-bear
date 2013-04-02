@@ -37,6 +37,6 @@ $ ->
       @form = (@options)=>
         {data: @model }
 
-  $(".form_container form").each (index,form)->
+  $("form.ko_form").each (index,form)->
     window.fb = new FormBuilder(form)
     ko.applyBindings(fb, form);

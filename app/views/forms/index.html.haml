@@ -2,7 +2,7 @@
 
 .container
   .row
-    .span6.form_container
+    .span6
       = ko_form_for @person, {:as => :person, :url => "/forms"} do |f|
         =f.text_field :first_name
         =f.text_field :age
@@ -13,8 +13,7 @@
           =f.text_field :hobby
         =f.submit :send
 
-
-    .span6.form_container
+    .span6
       = ko_form_for @person, {:as => :person, :url => "/forms"} do |f|
         =f.text_field :first_name
         =f.text_field :last_name
