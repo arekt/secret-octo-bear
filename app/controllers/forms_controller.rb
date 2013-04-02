@@ -1,7 +1,7 @@
 # encoding: utf-8
 class FormsController < ApplicationController
   def index
-    @person = {:first_name => nil, :last_name => "Smith", :age => 45, :details => { hobby: "Movies", work: "PR", :errors => []}, :errors => []}
+    @person = {:first_name => nil, :last_name => "Smith", :age => 45, :details => { hobby: "hobby B", work: "PR", :errors => []}, :errors => []}
   end
   def create
     @person = params[:person]

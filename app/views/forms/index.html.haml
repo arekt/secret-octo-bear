@@ -4,22 +4,22 @@
   .row
     .span6
       = ko_form_for @person, {:as => :person, :url => "/forms"} do |f|
-        =f.text_field :first_name
-        =f.text_field :age
-        =f.text_field :last_name
+        = f.text_field :first_name
+        = f.text_field :age
+        = f.text_field :last_name
         %hr
-        =f.fields_for :details do
-          =f.text_field :work
-          =f.text_field :hobby
-        =f.submit :send
+        = f.fields_for :details do
+          = f.text_field :work
+          = f.text_field :hobby
+        = f.submit :send
 
     .span6
       = ko_form_for @person, {:as => :person, :url => "/forms"} do |f|
-        =f.text_field :first_name
-        =f.text_field :last_name
-        =f.text_field :age
+        = f.text_field :first_name
+        = f.text_field :last_name
+        = f.text_field :age
         %hr
-        =f.fields_for :details do
-          =f.text_field :work
-          =f.text_field :hobby
-        =f.submit :send
+        = f.fields_for :details do
+          = f.text_field :work
+          = f.select :hobby, :collection => ["hobby A", "hobby B", "hobby C"]
+        = f.submit :send
