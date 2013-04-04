@@ -9,6 +9,8 @@ gem 'sqlite3'
 gem "bootstrap-sass", ">= 2.2.2.0"
 gem "haml"
 gem "debugger"
+gem "cells"
+gem "knockout_cells", :git => "git@github.com:arekt/knockout_cells.git"
 
 # Gems used only for assets and not required
 # in production environments by default.

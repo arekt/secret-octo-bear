@@ -11,6 +11,5 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require "jquery"
-//= require knockout-2.2.1.debug
-//= require knockout.mapping-latest.debug
+//= require knockout_cells
 //= require_tree .
